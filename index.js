@@ -7,22 +7,26 @@ client.on('ready', () => {
 
 client.on('message', async msg => {
   if (msg.content === '!ping') {
-    msg.channel.send('Pong!');
+    try{
+      msg.channel.send('Pong!');
+    } catch(e) {
+      msg.channel.send(e.message).then(message => console.log(`[run]${message.author.tag} used ${message.content}`)).catch(console.error);
+    }
   } else if (msg.content === '!uid' || msg.content === '!user_id') {
     try{
-      msg.channel.send(msg.author.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`));
+      msg.channel.send(msg.author.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch(e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '!cid' || msg.content === '!channel_id') {
     try{
-      msg.channel.send(msg.channel.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`));
+      msg.channel.send(msg.channel.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch(e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '!gid' || msg.content === '!guild_id' || msg.content === '!server_id' || msg.content === '!sid') {
     try{
-      msg.channel.send(msg.guild.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`));
+      msg.channel.send(msg.guild.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch(e) {
       msg.channel.send(e.message);
     }
