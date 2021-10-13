@@ -9,7 +9,9 @@ client.on('ready', () => {
 });
 
 client.on('message', async msg => {
-  if (msg.content === '!ping') {
+  if (msg.author.bot) {
+    return 0;
+  } else if (msg.content === '!ping') {
     try{
       msg.channel.send(client.ws.ping + "ms").then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     } catch(e) {
@@ -21,15 +23,27 @@ client.on('message', async msg => {
     } catch(e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '!cid' || msg.content === '!channel_id') {
+  } else if (msg.content === '!channelid' || msg.content === '!channel_id') {
     try{
       msg.channel.send(msg.channel.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch(e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '!gid' || msg.content === '!guild_id' || msg.content === '!server_id' || msg.content === '!sid') {
+  } else if (msg.content === '!serverid' || msg.content === '!guild_id' || msg.content === '!server_id' || msg.content === '!sid') {
     try{
       msg.channel.send(msg.guild.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
+    } catch(e) {
+      msg.channel.send(e.message);
+    }
+  } else if (msg.content === '!botid') {
+    try{
+      msg.channel.send('897034926187229205').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+    } catch(e) {
+      msg.channel.send(e.message);
+    }
+  } else if (msg.content === '!invite') {
+    try{
+      msg.channel.send('https://discord.com/api/oauth2/authorize?client_id=897034926187229205&permissions=8&scope=bot%20applications.commands').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     } catch(e) {
       msg.channel.send(e.message);
     }
