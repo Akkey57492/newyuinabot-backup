@@ -1,10 +1,12 @@
 {
   "name": "newyuinabot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "aaa",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "12.2.0"
+    "discord.js": "12.2.0",
+    "node-fetch": "^3.0.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {},
   "scripts": {
@@ -12,5 +14,13 @@
   },
   "keywords": [],
   "author": "yuina",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuina8686/newyinabot-backup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yuina8686/newyinabot-backup/issues"
+  },
+  "homepage": "https://github.com/yuina8686/newyinabot-backup#readme"
 }

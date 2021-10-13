@@ -2,7 +2,9 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 client.on('ready', () => {
+  //スタートした時に送信するテキスト
   console.log(`${client.user.tag} でログインしています。`)
+  ////コンソールにYuinaBOT（仮）#1479 でログインしていますを記録する
   client.user.setActivity(`${client.guilds.cache.size} server's`,{'type':'PLAYING'})
 });
 
@@ -13,7 +15,7 @@ client.on('message', async msg => {
     } catch(e) {
       msg.channel.send(e.message).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     }
-  } else if (msg.content === '!uid' || msg.content === '!user_id') {
+  } else if (msg.content === '!userid' || msg.content === '!user_id') {
     try{
       msg.channel.send(msg.author.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch(e) {
