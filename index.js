@@ -1,55 +1,71 @@
+const { Intents, Client } = require('discord.js');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+const options = {
+  intents: ["GUILDS", "GUILD_MESSAGES"],
+};
+const client = new Discord.Client(options);
 const fs = require('fs');
+const { disconnect } = require('process');
+
+function formattedDateTime(date) {
+  const y = date.getFullYear();
+  const m = ('0' + (date.getMonth() + 1)).slice(-2);
+  const d = ('0' + date.getDate()).slice(-2);
+  const h = ('0' + date.getHours()).slice(-2);
+  const mi = ('0' + date.getMinutes()).slice(-2);
+  const s = ('0' + date.getSeconds()).slice(-2);
+
+  return y + m + d;
+}
 
 client.on('ready', () => {
   //スタートした時に送信するテキスト
   console.log(`${client.user.tag} でログインしています。`)
   ////コンソールにYuinaBOT（仮）#1479 でログインしていますを記録する
-  client.user.setActivity(`${client.guilds.cache.size} server's||-help`,{'type':'PLAYING'})
+  client.user.setActivity(`${client.guilds.cache.size} server's||-help`, { 'type': 'PLAYING' })
 });
 
 client.on('message', async msg => {
   if (msg.author.bot) {
     return 0;
   } else if (msg.content === '-ping') {
-    try{
+    try {
       msg.channel.send(client.ws.ping + "ms").then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     }
   } else if (msg.content === '-userid' || msg.content === '-user_id') {
-    try{
+    try {
       msg.channel.send(msg.author.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '-channelid' || msg.content === '-channel_id') {
-    try{
+    try {
       msg.channel.send(msg.channel.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '-serverid' || msg.content === '-guild_id' || msg.content === '-server_id' || msg.content === '-guildid') {
-    try{
+    try {
       msg.channel.send(msg.guild.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '-botid') {
-    try{
+    try {
       msg.channel.send('897034926187229205').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '-invite') {
-    try{
+    try {
       msg.channel.send('https://discord.com/api/oauth2/authorize?client_id=897034926187229205&permissions=8&scope=bot%20applications.commands').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content.startsWith('-randint')) {
-    try{
+    try {
       command = msg.content.split(' ');
       if (command.length === 3) {
         var max = Number(command[2]);
@@ -59,7 +75,7 @@ client.on('message', async msg => {
       } else {
         msg.channel.send('引数が不正です。');
       }
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content.startsWith('-st')) {
@@ -70,23 +86,21 @@ client.on('message', async msg => {
         data = data.split('|');
         let ud = '';
         let text = '';
-        for (let i = 0;i < data.length;i += 1) {
+        for (let i = 0; i < data.length; i += 1) {
           if (data[i].indexOf(`${msg.author.id} `) != -1) {
             ud = data[i];
           }
         }
         if (ud === '') {
-          ud = `${msg.author.id} 1`;
+          ud = `${msg.author.id} 1 0`;
           data.push(ud);
         }
-        msg.channel.send(
-          {embed: {
-            color: 3066993,
-            title: `${msg.author.tag}のstatus`,
-            description: `レベル：　${ud.split(' ')[1]}`
-          }}
-        ).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-        for (let i = 0;i < data.length;i += 1) {
+        const embed = new Discord.MessageEmbed()
+        .setColor(3066993)
+        .setTitle(`${msg.author.tag}のstatus`)
+        .setDescription(`レベル：　${ud.split(' ')[1]}`)
+        msg.channel.send({embeds: [embed]}).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+        for (let i = 0; i < data.length; i += 1) {
           if (data[i] != '') {
             text = text + `${data[i].split(' ')[0]} ${data[i].split(' ')[1]}|`;
           }
@@ -98,13 +112,13 @@ client.on('message', async msg => {
         data = data.split('|');
         let ud = '';
         let text = '';
-        for (let i = 0;i < data.length;i += 1) {
+        for (let i = 0; i < data.length; i += 1) {
           if (data[i].indexOf(`${command[1]}} `) != -1) {
             ud = data[i];
           }
         }
         if (ud === '') {
-          ud = `${command[1]} 1`;
+          ud = `${command[1]} 1 0`;
           data.push(ud);
         }
         let id = command[1].replace('<', '');
@@ -115,14 +129,12 @@ client.on('message', async msg => {
         if (user === undefined) {
           msg.channel.send('不明なユーザーです。');
         } else {
-          msg.channel.send(
-            {embed: {
-              color: 3066993,
-              title: `${user.tag}のstatus`,
-              description: `レベル：　${ud.split(' ')[1]}`
-            }}
-          ).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-          for (let i = 0;i < data.length;i += 1) {
+          const embed = new Discord.MessageEmbed()
+          .setTitle(`${user.tag}のstatus`)
+          .setColor(3066993)
+          .setDescription(`レベル：　${ud.split(' ')[1]}`)
+          msg.channel.send({embeds: [embed]}).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+          for (let i = 0; i < data.length; i += 1) {
             if (data[i] != '') {
               text = text + `${id_3} ${data[i].split(' ')[1]}|`;
             }
@@ -133,53 +145,50 @@ client.on('message', async msg => {
       } else {
         msg.channel.send('引数が不正です。')
       }
-    } catch(e) {
+    } catch (e) {
       msg.channel.send(e.message);
     }
   } else if (msg.content === '-help') {
     try {
-      msg.channel.send(
-        {embed: {
-          color: 3066993,
-          title: 'help',
-          description: 'YuinaBOTのHelpです。',
-          fields: [
-            {
-              name: '-ping',
-              value: 'pingを表示します。'
-            },
-            {
-              name: '-userid',
-              value: 'あなたのIDを表示します。（別名：-user_id）'
-            },
-            {
-              name: '-channelid',
-              value: '実行したチャンネルのIDを表示します。（別名：-channel_id）'
-            },
-            {
-              name: '-serverid',
-              value: '実行したサーバーのIDを表示します。\n（別名：-guildid, -guild_id, -server_id）'
-            },
-            {
-              name: '-botid',
-              value: 'このBOTのIDを表示します。'
-            },
-            {
-              name: '-invite',
-              value: 'このBOTの招待リンクを表示します。'
-            },
-            {
-              name: '-randint [min] [max]',
-              value: 'min引数からmax引数の範囲で乱数を表示します。'
-            },
-            {
-              name: '-st [user]',
-              value: 'RPGのstatusを表示します。\nuserはoptionalです。\nuser引数はIDかメンションが指定できます。'
-            }
-          ]
-        }}
-      ).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
-    } catch(e) {
+      const embed = new Discord.MessageEmbed()
+      .setColor(3066993)
+      .setTitle('Help')
+      .addFields(
+        {
+          name: '-ping',
+          value: 'pingを表示します。'
+        },
+        {
+          name: '-userid',
+          value: 'あなたのIDを表示します。（別名：-user_id）'
+        },
+        {
+          name: '-channelid',
+          value: '実行したチャンネルのIDを表示します。（別名：-channel_id）'
+        },
+        {
+          name: '-serverid',
+          value: '実行したサーバーのIDを表示します。\n（別名：-guildid, -guild_id, -server_id）'
+        },
+        {
+          name: '-botid',
+          value: 'このBOTのIDを表示します。'
+        },
+        {
+          name: '-invite',
+          value: 'このBOTの招待リンクを表示します。'
+        },
+        {
+          name: '-randint [min] [max]',
+          value: 'min引数からmax引数の範囲で乱数を表示します。'
+        },
+        {
+          name: '-st [user]',
+          value: 'RPGのstatusを表示します。\nuserはoptionalです。\nuser引数はIDかメンションが指定できます。'
+        }
+      )
+      msg.channel.send({embeds: [embed]}).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+    } catch (e) {
       msg.channel.send(e.message);
     }
   }
