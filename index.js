@@ -28,43 +28,43 @@ client.on('ready', () => {
 client.on('message', async msg => {
   if (msg.author.bot) {
     return 0;
-  } else if (msg.content === '-ping') {
+  } else if (msg.content === '--ping') {
     try {
       msg.channel.send(client.ws.ping + "ms").then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     } catch (e) {
       msg.channel.send(e.message).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     }
-  } else if (msg.content === '-userid' || msg.content === '-user_id') {
+  } else if (msg.content === '--userid' || msg.content === '--user_id') {
     try {
       msg.channel.send(msg.author.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '-channelid' || msg.content === '-channel_id') {
+  } else if (msg.content === '--channelid' || msg.content === '--channel_id') {
     try {
       msg.channel.send(msg.channel.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '-serverid' || msg.content === '-guild_id' || msg.content === '-server_id' || msg.content === '-guildid') {
+  } else if (msg.content === '--serverid' || msg.content === '--guild_id' || msg.content === '--server_id' || msg.content === '--guildid') {
     try {
       msg.channel.send(msg.guild.id).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error)
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '-botid') {
+  } else if (msg.content === '--botid') {
     try {
       msg.channel.send('897034926187229205').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '-invite') {
+  } else if (msg.content === '--invite') {
     try {
       msg.channel.send('https://discord.com/api/oauth2/authorize?client_id=897034926187229205&permissions=8&scope=bot%20applications.commands').then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content.startsWith('-randint')) {
+  } else if (msg.content.startsWith('--randint')) {
     try {
       command = msg.content.split(' ');
       if (command.length === 3) {
@@ -78,7 +78,7 @@ client.on('message', async msg => {
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content.startsWith('-st')) {
+  } else if (msg.content.startsWith('--st')) {
     try {
       command = msg.content.split(' ');
       if (command.length === 1) {
@@ -148,42 +148,42 @@ client.on('message', async msg => {
     } catch (e) {
       msg.channel.send(e.message);
     }
-  } else if (msg.content === '-help') {
+  } else if (msg.content === '--help') {
     try {
       const embed = new Discord.MessageEmbed()
       .setColor(3066993)
       .setTitle('Help')
       .addFields(
         {
-          name: '-ping',
+          name: '--ping',
           value: 'pingを表示します。'
         },
         {
-          name: '-userid',
+          name: '--userid',
           value: 'あなたのIDを表示します。（別名：-user_id）'
         },
         {
-          name: '-channelid',
+          name: '--channelid',
           value: '実行したチャンネルのIDを表示します。（別名：-channel_id）'
         },
         {
-          name: '-serverid',
+          name: '--serverid',
           value: '実行したサーバーのIDを表示します。\n（別名：-guildid, -guild_id, -server_id）'
         },
         {
-          name: '-botid',
+          name: '--botid',
           value: 'このBOTのIDを表示します。'
         },
         {
-          name: '-invite',
+          name: '--invite',
           value: 'このBOTの招待リンクを表示します。'
         },
         {
-          name: '-randint [min] [max]',
+          name: '--randint [min] [max]',
           value: 'min引数からmax引数の範囲で乱数を表示します。'
         },
         {
-          name: '-st [user]',
+          name: '--st [user]',
           value: 'RPGのstatusを表示します。\nuserはoptionalです。\nuser引数はIDかメンションが指定できます。'
         }
       )
