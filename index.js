@@ -47,6 +47,20 @@ client.on('message', async msg => {
     } catch(e) {
       msg.channel.send(e.message);
     }
+  } else if (msg.content.startsWith('!randint')) {
+    try{
+      command = msg.content.split(' ');
+      if (command.length === 3) {
+        var max = Number(command[2]);
+        var min = Number(command[1]);
+        var a = Math.floor(Math.random() * (max + 1 - min)) + min;
+        msg.channel.send(String(a)).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+      } else {
+        msg.channel.send('引数が不正です。');
+      }
+    } catch(e) {
+      msg.channel.send(e.message);
+    }
   }
 });
 
