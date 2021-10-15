@@ -95,11 +95,20 @@ client.on('message', async msg => {
           ud = `${msg.author.id} 1 0`;
           data.push(ud);
         }
+        /*
         const embed = new Discord.MessageEmbed()
         .setColor(3066993)
         .setTitle(`${msg.author.tag}のstatus`)
         .setDescription(`レベル：　${ud.split(' ')[1]}`)
         msg.channel.send({embeds: [embed]}).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
+        */
+        msg.channel.send(
+          {embed: {
+            title: `${msg.author.tag}のstatus`,
+            description: `レベル: ${up.split(' ')[1]}`,
+            color: 3066993
+          }}
+        ).then(message => console.log(`[run]${msg.author.tag} used ${msg.content}`)).catch(console.error);
         for (let i = 0; i < data.length; i += 1) {
           if (data[i] != '') {
             text = text + `${data[i].split(' ')[0]} ${data[i].split(' ')[1]}|`;
